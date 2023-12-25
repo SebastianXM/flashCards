@@ -26,6 +26,12 @@ app.post('/decks', async (req: Request, res: Response) => {
     res.json(createdDeck);
 });
 
+app.get('/decks', async (req: Request, res: Response) => {
+    const currDecks = await Deck.find();
+    res.setHeader('Content-Type', 'application/json')
+    res.status(200);
+    res.json(currDecks);
+});
 
 mongoose.connect(process.env.MONGO_URL!)
 .then( () => {
