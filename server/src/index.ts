@@ -1,8 +1,8 @@
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { config } from 'dotenv';
-config()
-
+config();
+import cors from 'cors';
 import Deck from './models/deck';
 
 
@@ -12,6 +12,9 @@ const HOST = 'localhost'
 const app = express();
 
 app.use(express.json());
+app.use(cors({
+    origin: '*',
+}));
 
 app.post('/decks', async (req: Request, res: Response) => {
     const newDeck = new Deck({
