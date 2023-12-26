@@ -3,7 +3,7 @@ import './App.css'
 import { Link } from 'react-router-dom';
 import { deleteDeck } from './api/deleteDeck';
 import { TDeck, getDecks } from './api/getDecks';
-import { createdDeck } from './api/createDeck';
+import { createDeck } from './api/createDeck';
 
 function App() {
   const [title, setTitle] = useState('');
@@ -11,7 +11,7 @@ function App() {
 
   async function handleCreateDeck(e: React.FormEvent){
     e.preventDefault();
-    const newDeck = await createdDeck(title);
+    const newDeck = await createDeck(title);
     if (!newDeck) return;
     setDecks([...decks, newDeck])
     setTitle('');
@@ -31,7 +31,9 @@ function App() {
   }, []);
 
   return (
+    <div className='container'>
     <div className='App'>
+        <h1>Your Decks</h1>
       <ul className="decks">
         {
           decks.map((deck) => 
@@ -53,6 +55,7 @@ function App() {
         />
         <button>Create Deck</button>
       </form>
+    </div>
     </div>
   )
 }

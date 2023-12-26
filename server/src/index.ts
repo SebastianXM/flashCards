@@ -1,10 +1,15 @@
-import express, { Request, Response } from 'express';
-import mongoose from 'mongoose';
 import { config } from 'dotenv';
 config();
-import cors from 'cors';
-import Deck from './models/deck';
 
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import { getDecksController } from './controllers/getDeckController';
+import { createDeckController } from './controllers/createDeckController';
+import { deleteDeckController } from './controllers/deleteDeckController';
+import { createCardInDeckController } from './controllers/createDeckInDeckController';
+import { getOneDeckController } from './controllers/getOneDeckController';
+import { deleteCardInDeckController } from './controllers/deleteCardInDeckController';
 
 const PORT = 8000;
 const HOST = 'localhost'
@@ -16,28 +21,12 @@ app.use(cors({
     origin: '*',
 }));
 
-app.post('/decks', async (req: Request, res: Response) => {
-    const { title } = req.body;
-    if (!title || !title.trim()) {
-        return res.status(400).json({ error: 'Deck title cannot be empty' });
-    }
-    const newDeck = new Deck({
-        title: title 
-    });
-    const createdDeck = await newDeck.save();
-    res.setHeader('Content-Type', 'application/json').status(201).json(createdDeck);
-});
-
-app.get('/decks', async (req: Request, res: Response) => {
-    const currDecks = await Deck.find();
-    res.setHeader('Content-Type', 'application/json').status(200).json(currDecks);
-});
-
-app.delete('/decks/:deckId', async (req: Request, res: Response) => {
-    const deckId = req.params.deckId;
-    const deck = await Deck.findByIdAndDelete(deckId);
-    res.send(deck);
-});
+app.get('/decks', getDecksController);
+app.get('/decks/:deckId', getOneDeckController);
+app.post('/decks', createDeckController);
+app.post('/decks/:deckId/cards', createCardInDeckController);
+app.delete('/decks/:deckId', deleteDeckController);
+app.delete('/decks/:deckId/cards/:index', deleteCardInDeckController);
 
 mongoose.connect(process.env.MONGO_URL!)
 .then( () => {

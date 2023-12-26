@@ -1,6 +1,6 @@
 import { API_URL } from "./config";
 
-export async function createdDeck(title: string) {
+export async function createDeck(title: string) {
     if (!title.trim()){
         alert('Deck title cannot be empty');
         return;

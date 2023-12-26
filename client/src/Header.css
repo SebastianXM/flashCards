@@ -1,0 +1,24 @@
+.Header {
+    height: 50px;
+
+}
+
+.Header .container {
+    max-width: 800px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.Header a {
+    text-decoration: none; 
+    color: #fff; 
+    margin-right: 20px;
+}
+
+.Header a:last-child {
+    margin-right: 0;
+}
